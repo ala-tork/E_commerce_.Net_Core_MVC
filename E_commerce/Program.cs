@@ -1,6 +1,14 @@
+using E_commerce.Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add translator and the data base storage after install sqlserver with neget package.
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
+// Add services to the container
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -23,5 +31,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+//add seed void to create data in database if it's empty
+AppDbInitializer.Seed(app);
 app.Run();
