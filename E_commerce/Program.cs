@@ -1,4 +1,5 @@
 using E_commerce.Data;
+using E_commerce.Data.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,9 @@ builder.Services.AddDbContext<AppDbContext>(
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
+//servecies configuration :
+builder.Services.AddScoped<IActorsService, ActorsService>();
+builder.Services.AddScoped<IActorsService2, ActorsService2>();
 
 var app = builder.Build();
 
